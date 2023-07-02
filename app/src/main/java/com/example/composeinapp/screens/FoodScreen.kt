@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -50,18 +52,40 @@ private fun FoodContent(state: FoodUiState) {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         item {
-           Header(title = "Welcome Ahmed", subTitle ="(:" )
+            Header(title = "Welcome ya ", subTitle = "(:")
         }
         items(state.meals) {
             MealItem(meal = it)
         }
-        item { 
+        item {
             Text(text = "Salaaam")
         }
-         items(state.meals) {
-            MealItem(meal = it)
+        items(state.meals.size) {
+            val backgroundColor = if (it % 2 == 0) Color.Black else Color.Green
+            LargeTextItem(text = state.meals[it].name, color = backgroundColor)
         }
+//        itemsIndexed(state.meals) { index, item ->
+//            val backgroundColor = if (index % 2 == 0) Color.Black else Color.Red
+//            LargeTextItem(text = item.name, color = backgroundColor)
+//
+//        }
     }
+}
+
+@Composable
+fun LargeTextItem(text: String, color: Color) {
+    Text(
+        text = text,
+        fontFamily = Rubik,
+        fontWeight = FontWeight.Normal,
+        fontSize = 28.sp,
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(24.dp)
+            .background(color = color)
+
+    )
 }
 
 @Composable
