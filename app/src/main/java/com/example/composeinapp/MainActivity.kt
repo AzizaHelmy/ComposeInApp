@@ -3,6 +3,7 @@ package com.example.composeinapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.example.composeinapp.screens.FoodScreen
 import com.example.composeinapp.screens.ProfileScreen
 
 class MainActivity : ComponentActivity() {
@@ -10,7 +11,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             //CounterScreen()
-            ProfileScreen()
+            //ProfileScreen()
+            FoodScreen()
         }
     }
 }
