@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.composeinapp.composable.SpacerHorizontal16
-import com.example.composeinapp.viewmodels.CounterViewModel
+import com.example.composeinapp.viewmodel.CounterViewModel
 
 /**
  * Created by Aziza Helmy on 7/2/2023.

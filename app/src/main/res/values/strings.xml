@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">ComposeInApp</string>
+    <string name="account">Account</string>
+    <string name="edit_or_manage_your_account">Edit or manage your Account</string>
+    <string name="change_profile_picture">Change profile picture</string>
+    <string name="firstname">FirstName</string>
+    <string name="lastname">LastName</string>
+    <string name="location">Location</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Phone number</string>
+    <string name="save">Save</string>
 </resources>

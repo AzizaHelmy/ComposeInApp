@@ -1,4 +1,4 @@
-package com.example.composeinapp.viewmodels
+package com.example.composeinapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
