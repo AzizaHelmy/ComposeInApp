@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.rememberAsyncImagePainter
 import com.example.composeinapp.R
 import com.example.composeinapp.composable.DefaultButton
 import com.example.composeinapp.composable.Header
@@ -69,7 +70,7 @@ private fun ProfileContent(
             subTitle = stringResource(R.string.edit_or_manage_your_account)
         )
         SpacerVertical32()
-        ProfileAvatar(painter = painterResource(id = R.drawable.profiley))
+        ProfileAvatar(painter = rememberAsyncImagePainter(model = state.profilePictureLink))
         SpacerVertical24()
         TextButton(text = stringResource(R.string.change_profile_picture)) {}
         SpacerVertical32()

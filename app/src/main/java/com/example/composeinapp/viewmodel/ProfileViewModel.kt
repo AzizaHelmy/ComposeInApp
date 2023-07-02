@@ -21,6 +21,9 @@ class ProfileViewModel : ViewModel() {
     }
 
     private fun getUserInfo() {
+        // _state.update { it.copy(profilePictureLink = "https://wallpapers.com/images/hd/cool-profile-picture-87h46gcobjl5e4xu.jpg") }
+        _state.update { it.copy(profilePictureLink = "https://freerangestock.com/sample/125944/old-woman-in-white-hijab-.jpg") }
+
         //from use case
     }
 
