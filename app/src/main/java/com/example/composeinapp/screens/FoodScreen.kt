@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
+import com.example.composeinapp.composable.Header
 import com.example.composeinapp.ui.theme.CardBackgroundColor
 import com.example.composeinapp.ui.theme.Rubik
 import com.example.composeinapp.viewmodel.FoodViewModel
@@ -48,7 +49,16 @@ private fun FoodContent(state: FoodUiState) {
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        item {
+           Header(title = "Welcome Ahmed", subTitle ="(:" )
+        }
         items(state.meals) {
+            MealItem(meal = it)
+        }
+        item { 
+            Text(text = "Salaaam")
+        }
+         items(state.meals) {
             MealItem(meal = it)
         }
     }
