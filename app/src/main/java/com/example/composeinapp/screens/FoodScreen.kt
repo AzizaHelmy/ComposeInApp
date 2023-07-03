@@ -1,7 +1,9 @@
 package com.example.composeinapp.screens
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -41,11 +42,12 @@ import com.example.composeinapp.viewmodel.state.MealUiState
 @Composable
 fun FoodScreen(viewModel: FoodViewModel = hiltViewModel()) {
     val state by viewModel.state.collectAsState()
-    FoodContent(state = state)
+    FoodContent(state = state, onClickMeal = viewModel::onClickMeal)
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun FoodContent(state: FoodUiState) {
+private fun FoodContent(state: FoodUiState, onClickMeal: (MealUiState) -> Unit) {
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
         contentPadding = PaddingValues(16.dp),
@@ -54,8 +56,8 @@ private fun FoodContent(state: FoodUiState) {
         item {
             Header(title = "Welcome ya ", subTitle = "(:")
         }
-        items(state.meals) {
-            MealItem(meal = it)
+        items(items = state.meals, key = { currentMeal -> currentMeal.name }) {
+            MealItem(meal = it, onClick = onClickMeal, modifier = Modifier.animateItemPlacement())
         }
         item {
             Text(text = "Salaaam")
@@ -89,13 +91,13 @@ fun LargeTextItem(text: String, color: Color) {
 }
 
 @Composable
-fun MealItem(meal: MealUiState) {
+fun MealItem(meal: MealUiState, onClick: (MealUiState) -> Unit, modifier: Modifier) {
     Card(
         modifier = Modifier
             .fillMaxWidth(),
         shape = RoundedCornerShape(16.dp)
     ) {
-        Column() {
+        Column(modifier = modifier.clickable { onClick(meal) }) {
             Image(
                 painter = rememberAsyncImagePainter(model = meal.imageUrl),
                 contentDescription = "Food Image",
@@ -127,6 +129,8 @@ fun PreviewMealItem() {
         meal = MealUiState(
             "Ahmed",
             "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/796412456/grilled-cheese-tomato-soup.jpg?quality=82&strip=1"
-        )
+        ),
+        onClick = {},
+        modifier = Modifier
     )
 }

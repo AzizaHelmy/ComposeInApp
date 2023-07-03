@@ -64,8 +64,8 @@ class FoodViewModel : ViewModel() {
         }
     }
 
-    fun onClickMeal(meal: MealUiState) {
-
+    fun onClickMeal(selectedMeal: MealUiState) {
+        _state.update { it.copy(meals = it.meals.filterNot { meal -> meal.name == selectedMeal.name }) }
     }
 
 }
