@@ -58,7 +58,6 @@ private fun FoodContent(state: FoodUiState, onClickMeal: (MealUiState) -> Unit) 
         contentPadding = PaddingValues(vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-
         item {
             Text(text = "My Favorites Akl 😋", modifier = Modifier.padding(16.dp))
             LazyRow(
@@ -73,19 +72,31 @@ private fun FoodContent(state: FoodUiState, onClickMeal: (MealUiState) -> Unit) 
         items(items = state.meals, key = { currentMeal -> currentMeal.name }) {
             MealItem(meal = it, onClick = onClickMeal, modifier = Modifier.animateItemPlacement())
         }
+        stickyHeader {
+            MealsHeader(title = "EasternMeals:")
+        }
+        items(items = state.easternMeals, key = { currentMeal -> currentMeal.name }) {
+            MealItem(meal = it, onClick = onClickMeal, modifier = Modifier.animateItemPlacement())
+        }
+        stickyHeader { MealsHeader(title = "WesternMeals:") }
+        items(items = state.westernMeals, key = { currentMeal -> currentMeal.name }) {
+            MealItem(meal = it, onClick = onClickMeal, modifier = Modifier.animateItemPlacement())
+        }
         item {
             Text(text = "Salaaam")
         }
-        items(state.meals.size) {
-            val backgroundColor = if (it % 2 == 0) Color.Black else Color.Green
-            LargeTextItem(text = state.meals[it].name, color = backgroundColor)
-        }
-        //        itemsIndexed(state.meals) { index, item ->
-        //            val backgroundColor = if (index % 2 == 0) Color.Black else Color.Red
-        //            LargeTextItem(text = item.name, color = backgroundColor)
-        //
-        //        }
     }
+}
+
+@Composable
+private fun MealsHeader(title: String) {
+    Text(
+        text = title,
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(CardBackgroundColor)
+            .padding(8.dp)
+    )
 }
 
 @Composable

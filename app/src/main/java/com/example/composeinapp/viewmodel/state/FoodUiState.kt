@@ -7,7 +7,8 @@ package com.example.composeinapp.viewmodel.state
 data class FoodUiState(
     val restaurants: List<RestaurantUiState> = emptyList(),
     val meals: List<MealUiState> = emptyList(),
-
+    val easternMeals: List<MealUiState> = emptyList(),
+    val westernMeals: List<MealUiState> = emptyList()
 )
 
 data class MealUiState(
