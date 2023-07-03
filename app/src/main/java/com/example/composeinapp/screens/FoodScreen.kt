@@ -7,12 +7,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -48,13 +53,71 @@ import com.example.composeinapp.viewmodel.state.RestaurantUiState
 fun FoodScreen(viewModel: FoodViewModel = hiltViewModel()) {
     val state by viewModel.state.collectAsState()
     FoodContent(state = state, onClickMeal = viewModel::onClickMeal)
+    //LazyGridFoodContent(state = state, onClickMeal = viewModel::onClickMeal)
+    //AdaptiveLazyGridFoodContent(state = state, onClickMeal = viewModel::onClickMeal)
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun AdaptiveLazyGridFoodContent(
+    state: FoodUiState,
+    onClickMeal: (MealUiState) -> Unit
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(minSize = 128.dp),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+ item(span = {
+            GridItemSpan(3)
+        }) {
+            Text(text = "Menu")
+        }
+        items(items = state.meals, key = { currentMeal -> currentMeal.name }) {
+            MealItem(
+                meal = it,
+                onClick = onClickMeal,
+                modifier = Modifier
+                    .animateItemPlacement()
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun LazyGridFoodContent(
+    state: FoodUiState,
+    onClickMeal: (MealUiState) -> Unit
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        item(span = {
+            GridItemSpan(3)
+        }) {
+            Text(text = "Menu")
+        }
+        items(items = state.meals, key = { currentMeal -> currentMeal.name }) {
+            MealItem(
+                meal = it,
+                onClick = onClickMeal,
+                modifier = Modifier
+                    .animateItemPlacement()
+            )
+        }
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun FoodContent(state: FoodUiState, onClickMeal: (MealUiState) -> Unit) {
     LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -70,9 +133,13 @@ private fun FoodContent(state: FoodUiState, onClickMeal: (MealUiState) -> Unit) 
             }
         }
         items(items = state.meals, key = { currentMeal -> currentMeal.name }) {
-            MealItem(meal = it, onClick = onClickMeal, modifier = Modifier.animateItemPlacement())
+            MealItem(
+                meal = it, onClick = onClickMeal,
+                modifier = Modifier
+                    .animateItemPlacement()
+            )
         }
-        stickyHeader {
+        item {
             MealsHeader(title = "EasternMeals:")
         }
         items(items = state.easternMeals, key = { currentMeal -> currentMeal.name }) {
@@ -80,7 +147,12 @@ private fun FoodContent(state: FoodUiState, onClickMeal: (MealUiState) -> Unit) 
         }
         stickyHeader { MealsHeader(title = "WesternMeals:") }
         items(items = state.westernMeals, key = { currentMeal -> currentMeal.name }) {
-            MealItem(meal = it, onClick = onClickMeal, modifier = Modifier.animateItemPlacement())
+            MealItem(
+                meal = it,
+                onClick = onClickMeal,
+                modifier = Modifier
+                    .animateItemPlacement()
+            )
         }
         item {
             Text(text = "Salaaam")
@@ -119,6 +191,7 @@ fun LargeTextItem(text: String, color: Color) {
 fun MealItem(meal: MealUiState, onClick: (MealUiState) -> Unit, modifier: Modifier) {
     Card(
         modifier = Modifier
+            .padding(horizontal = 16.dp)
             .fillMaxWidth(),
         shape = RoundedCornerShape(16.dp)
     ) {
