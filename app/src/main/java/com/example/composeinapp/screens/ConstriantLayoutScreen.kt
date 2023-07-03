@@ -16,14 +16,19 @@ import androidx.constraintlayout.compose.ConstraintLayout
 fun TestConstraint() {
     ConstraintLayout() {
         val (button, fab, text) = createRefs()
+        val horizontalGuideLine = createGuidelineFromTop(0.13f)
+        //val chain = createHorizontalChain(button, text)
+
         Button(onClick = { },
             modifier = Modifier.constrainAs(button) {
-                top.linkTo(parent.top)
-                bottom.linkTo(parent.bottom)
+//                top.linkTo(parent.top)
+//                bottom.linkTo(parent.bottom)
+                top.linkTo(horizontalGuideLine)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             }) {}
-        FloatingActionButton(onClick = {},
+        FloatingActionButton(
+            onClick = {},
             modifier = Modifier.constrainAs(fab) {
                 bottom.linkTo(parent.bottom, 32.dp)
                 end.linkTo(parent.end, 32.dp)
