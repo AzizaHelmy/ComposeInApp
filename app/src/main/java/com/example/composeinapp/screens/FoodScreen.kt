@@ -10,15 +10,20 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -28,12 +33,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
-import com.example.composeinapp.composable.Header
 import com.example.composeinapp.ui.theme.CardBackgroundColor
 import com.example.composeinapp.ui.theme.Rubik
 import com.example.composeinapp.viewmodel.FoodViewModel
 import com.example.composeinapp.viewmodel.state.FoodUiState
 import com.example.composeinapp.viewmodel.state.MealUiState
+import com.example.composeinapp.viewmodel.state.RestaurantUiState
 
 /**
  * Created by Aziza Helmy on 7/2/2023.
@@ -50,11 +55,20 @@ fun FoodScreen(viewModel: FoodViewModel = hiltViewModel()) {
 private fun FoodContent(state: FoodUiState, onClickMeal: (MealUiState) -> Unit) {
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(16.dp),
+        contentPadding = PaddingValues(vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+
         item {
-            Header(title = "Welcome ya ", subTitle = "(:")
+            Text(text = "My Favorites Akl 😋", modifier = Modifier.padding(16.dp))
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(horizontal = 16.dp)
+            ) {
+                items(state.restaurants) {
+                    RestaurantItem(restaurant = it)
+                }
+            }
         }
         items(items = state.meals, key = { currentMeal -> currentMeal.name }) {
             MealItem(meal = it, onClick = onClickMeal, modifier = Modifier.animateItemPlacement())
@@ -66,11 +80,11 @@ private fun FoodContent(state: FoodUiState, onClickMeal: (MealUiState) -> Unit) 
             val backgroundColor = if (it % 2 == 0) Color.Black else Color.Green
             LargeTextItem(text = state.meals[it].name, color = backgroundColor)
         }
-//        itemsIndexed(state.meals) { index, item ->
-//            val backgroundColor = if (index % 2 == 0) Color.Black else Color.Red
-//            LargeTextItem(text = item.name, color = backgroundColor)
-//
-//        }
+        //        itemsIndexed(state.meals) { index, item ->
+        //            val backgroundColor = if (index % 2 == 0) Color.Black else Color.Red
+        //            LargeTextItem(text = item.name, color = backgroundColor)
+        //
+        //        }
     }
 }
 
@@ -120,6 +134,23 @@ fun MealItem(meal: MealUiState, onClick: (MealUiState) -> Unit, modifier: Modifi
             )
         }
     }
+}
+
+@Composable
+fun RestaurantItem(restaurant: RestaurantUiState) {
+    Image(
+        painter = rememberAsyncImagePainter(model = restaurant.imageUrl),
+        contentDescription = "RestaurantItem Image",
+        contentScale = ContentScale.Crop,
+        alignment = Alignment.Center,
+        modifier = Modifier
+            .size(96.dp)
+            .clip(CircleShape)
+            .background(
+                color = Color(0xFFF8F8F8F)
+            ),
+    )
+
 }
 
 @Preview

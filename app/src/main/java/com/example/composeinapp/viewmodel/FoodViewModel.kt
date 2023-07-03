@@ -3,6 +3,7 @@ package com.example.composeinapp.viewmodel
 import androidx.lifecycle.ViewModel
 import com.example.composeinapp.viewmodel.state.FoodUiState
 import com.example.composeinapp.viewmodel.state.MealUiState
+import com.example.composeinapp.viewmodel.state.RestaurantUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,6 +20,36 @@ class FoodViewModel : ViewModel() {
 
     init {
         getFoods()
+        getRestaurants()
+    }
+
+    private fun getRestaurants() {
+        _state.update {
+            it.copy(
+                restaurants = listOf(
+                    RestaurantUiState(
+                        "Humborgar",
+                        "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=960,872"
+                    ),
+                    RestaurantUiState(
+                        "Seso",
+                        "https://anestisxasapotaverna.gr/wp-content/uploads/2021/12/ARTICLE-1.jpg"
+                    ),
+                    RestaurantUiState(
+                        "Mozzela",
+                        "https://interactive.wttw.com/sites/default/files/food-landing-page-hero_01.jpg"
+                    ),
+                    RestaurantUiState(
+                        "Nano",
+                        "https://a.cdn-hotels.com/gdcs/production0/d1513/35c1c89e-408c-4449-9abe-f109068f40c0.jpg?impolicy=fcrop&w=800&h=533&q=medium"
+                    ),
+                    RestaurantUiState(
+                        "XYZZ",
+                        "https://tekce.net/files/upload/images/spanish-best-cousines-1.jpg"
+                    )
+                    )
+            )
+        }
     }
 
     private fun getFoods() {
