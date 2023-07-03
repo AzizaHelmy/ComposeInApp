@@ -3,8 +3,7 @@ package com.example.composeinapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.composeinapp.screens.FoodScreen
-import com.example.composeinapp.screens.ProfileScreen
+import com.example.composeinapp.screens.TestConstraint
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,7 +11,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             //CounterScreen()
             //ProfileScreen()
-            FoodScreen()
+            //FoodScreen()
+            TestConstraint()
         }
     }
 }
